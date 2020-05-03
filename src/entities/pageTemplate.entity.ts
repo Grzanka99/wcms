@@ -23,5 +23,5 @@ export class PageTemplateEntity {
     name: 'style_id',
     referencedColumnName: 'id',
   })
-  styles_id: StylesEntity;
+  styles: StylesEntity;
 }

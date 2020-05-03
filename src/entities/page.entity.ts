@@ -33,7 +33,7 @@ export class PageEntity {
     name: 'template_id',
     referencedColumnName: 'id',
   })
-  template_id: PageTemplateEntity;
+  template: PageTemplateEntity;
 
   /**
    * Page name define, almost like route
