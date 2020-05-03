@@ -5,7 +5,7 @@ enum availablePageTypes {
   rawHTML = 'html',
 }
 
-@Entity('wcms__PageTypes')
+@Entity('PageTypes')
 export class PageTypeEntity {
   @PrimaryGeneratedColumn()
   id: number;

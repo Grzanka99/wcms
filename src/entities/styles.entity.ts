@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('wcms__Styles')
+@Entity('Styles')
 export class StylesEntity {
   @PrimaryGeneratedColumn()
   id: number;

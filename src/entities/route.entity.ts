@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('wcms__Routes')
+@Entity('Routes')
 export class RouteEntity {
   @PrimaryGeneratedColumn()
   id: number;

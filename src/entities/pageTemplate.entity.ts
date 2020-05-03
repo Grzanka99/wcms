@@ -7,7 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-@Entity('wcms__PageTemplates')
+@Entity('PageTemplates')
 export class PageTemplateEntity {
   @PrimaryGeneratedColumn()
   id: number;

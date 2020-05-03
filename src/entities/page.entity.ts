@@ -9,7 +9,7 @@ import {
   Column,
 } from 'typeorm';
 
-@Entity('wcms__Pages')
+@Entity('Pages')
 export class PageEntity {
   @PrimaryGeneratedColumn()
   id: number;
