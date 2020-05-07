@@ -32,6 +32,13 @@ describe('User Service', () => {
     expect(await service.createUser(user)).toMatchObject(user);
   });
 
+  it('should return exception "user already exists', async () => {
+    expect(await service.createUser(user)).toMatchObject({
+      message: 'Error',
+      desc: `User ${user.username} already exists!`,
+    });
+  });
+
   it('should find user', async () => {
     expect(await service.findOne(user.username)).toMatchObject({
       username: user.username,
@@ -39,7 +46,14 @@ describe('User Service', () => {
     });
   });
 
-  it("should't find user ", async () => {
+  it("should't find user", async () => {
     expect(await service.findOne('noone')).toBe(undefined);
+  });
+
+  it('should delete user', async () => {
+    expect(await service.deleteOne(user.username)).toMatchObject({
+      message: 'Ok',
+      desc: `User ${user.username} has been deleted.`,
+    });
   });
 });
