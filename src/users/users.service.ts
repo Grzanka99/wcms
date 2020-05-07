@@ -37,7 +37,6 @@ export class UsersService {
     } catch (err) {
       await runner.rollbackTransaction();
     } finally {
-      console.log('finally');
       runner.release();
     }
     return {
