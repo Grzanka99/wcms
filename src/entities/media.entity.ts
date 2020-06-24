@@ -1,5 +1,5 @@
 import { MediaMetadataEntity } from './mediaMetadata.entity';
-import { MediaTypeEntity } from './mediaTypes.entity';
+import { MediaTypeEntity } from './mediaType.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
