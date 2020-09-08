@@ -14,6 +14,11 @@ export class UsersService {
     private connection: Connection,
   ) {}
 
+  /**
+   * This function create user if doesn't exists
+   * @param user UserEntity
+   * @return <UserEntity | undefined | Exception>
+   */
   async createUser(
     user: UserEntity,
   ): Promise<UserEntity | undefined | Exception> {
@@ -25,6 +30,8 @@ export class UsersService {
     }
 
     const runner = this.connection.createQueryRunner();
+    user.password = "asd";
+    console.log(user.password);
 
     await runner.connect();
     await runner.startTransaction();
@@ -45,7 +52,12 @@ export class UsersService {
     };
   }
 
-  async findOne(username: string): Promise<undefined | any> {
+  /**
+   * Find specific user by username
+   * @param username string
+   * @return <undefined | {username: string, accessLevel: number}>
+   */
+  async findOne(username: string): Promise<undefined | {username: string, accessLevel: number}> {
     const user = await this.userRepository.findOne({ username: username });
 
     if (!user) return undefined;
@@ -56,6 +68,11 @@ export class UsersService {
     };
   }
 
+  /**
+   * Delete user of given username
+   * @param username strings
+   * @return <Exception | Message | UndefinedException>
+   */
   async deleteOne(
     username: string,
   ): Promise<Exception | Message | UndefinedException> {
