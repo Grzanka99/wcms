@@ -24,7 +24,7 @@ export class UsersService {
     username: string;
     password: string;
   }): Promise<boolean | Exception> {
-    if ((await this.findOne(userData.username)) !== undefined) {
+    if (await this.findOne(userData.username)) {
       return {
         message: 'Error',
         desc: `User ${userData.username} already exists!`,
@@ -36,7 +36,7 @@ export class UsersService {
 
     const user: UserEntity = new UserEntity();
     // eslint-disable-next-line @typescript-eslint/camelcase
-    user.access_level = 10;
+    user.access_level = 0;
     user.username = userData.username;
     user.salt = salt;
     user.password = hashedPassword;
@@ -65,12 +65,12 @@ export class UsersService {
   /**
    * Find specific user by username
    * @param username string
-   * @return <undefined | UserEntity>
+   * @return <false | UserEntity>
    */
-  async findOne(username: string): Promise<undefined | UserEntity> {
+  async findOne(username: string): Promise<boolean | UserEntity> {
     const user = await this.userRepository.findOne({ username: username });
 
-    if (!user) return undefined;
+    if (!user) return false;
 
     return user;
   }
@@ -83,7 +83,7 @@ export class UsersService {
   async deleteOne(
     username: string,
   ): Promise<Exception | Message | UndefinedException> {
-    if (this.findOne(username)) {
+    if (await this.findOne(username)) {
       try {
         this.userRepository.delete({ username: username });
 
