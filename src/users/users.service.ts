@@ -18,11 +18,12 @@ export class UsersService {
   /**
    * This function create user if doesn't exists
    * @param user UserEntity
-   * @return <UserEntity | undefined | Exception>
+   * @return <boolean | Exception>
    */
-  async createUser(
-    userData: { username: string, password: string },
-  ): Promise<UserEntity | undefined | Exception> {
+  async createUser(userData: {
+    username: string;
+    password: string;
+  }): Promise<boolean | Exception> {
     if ((await this.findOne(userData.username)) !== undefined) {
       return {
         message: 'Error',
@@ -40,7 +41,6 @@ export class UsersService {
     user.salt = salt;
     user.password = hashedPassword;
 
-
     const runner = this.connection.createQueryRunner();
 
     await runner.connect();
@@ -50,7 +50,7 @@ export class UsersService {
       await runner.manager.save(user);
       await runner.commitTransaction();
 
-      return user;
+      return true;
     } catch (err) {
       await runner.rollbackTransaction();
     } finally {

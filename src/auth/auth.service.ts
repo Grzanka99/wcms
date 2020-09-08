@@ -8,7 +8,7 @@ import { SafeUser } from 'src/interfaces/basic';
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
   async validateUser(username: string, pass: string): Promise<null | SafeUser> {
@@ -26,11 +26,11 @@ export class AuthService {
   }
 
   async login(user: SafeUser): Promise<any> {
-    const payload = { username: user.username, sub: user.id};
+    const payload = { username: user.username, sub: user.id };
 
     return {
       // eslint-disable-next-line @typescript-eslint/camelcase
       access_token: this.jwtService.sign(payload),
-    }
+    };
   }
 }
