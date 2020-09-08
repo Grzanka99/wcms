@@ -15,4 +15,10 @@ describe('Users Controller', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+  it('shoud return user object', async () => {
+    expect(
+      await controller.getProfile({ user: { userId: 1, username: 'test' } }),
+    ).toMatchObject({ userId: 1, username: 'test' });
+  });
 });
