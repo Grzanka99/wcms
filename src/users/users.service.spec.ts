@@ -40,10 +40,7 @@ describe('User Service', () => {
   });
 
   it('should find user', async () => {
-    expect(await service.findOne(user.username)).toMatchObject({
-      username: user.username,
-      accessLevel: user.access_level,
-    });
+    expect(await service.findOne(user.username)).toMatchObject(user);
   });
 
   it("should't find user", async () => {

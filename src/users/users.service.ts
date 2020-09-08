@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Connection } from 'typeorm';
 import { Exception } from '../interfaces/exception';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -20,18 +21,27 @@ export class UsersService {
    * @return <UserEntity | undefined | Exception>
    */
   async createUser(
-    user: UserEntity,
+    userData: { username: string, password: string },
   ): Promise<UserEntity | undefined | Exception> {
-    if ((await this.findOne(user.username)) !== undefined) {
+    if ((await this.findOne(userData.username)) !== undefined) {
       return {
         message: 'Error',
-        desc: `User ${user.username} already exists!`,
+        desc: `User ${userData.username} already exists!`,
       };
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(userData.password, salt);
+
+    const user: UserEntity = new UserEntity();
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    user.access_level = 10;
+    user.username = userData.username;
+    user.salt = salt;
+    user.password = hashedPassword;
+
+
     const runner = this.connection.createQueryRunner();
-    user.password = "asd";
-    console.log(user.password);
 
     await runner.connect();
     await runner.startTransaction();
@@ -55,17 +65,14 @@ export class UsersService {
   /**
    * Find specific user by username
    * @param username string
-   * @return <undefined | {username: string, accessLevel: number}>
+   * @return <undefined | UserEntity>
    */
-  async findOne(username: string): Promise<undefined | {username: string, accessLevel: number}> {
+  async findOne(username: string): Promise<undefined | UserEntity> {
     const user = await this.userRepository.findOne({ username: username });
 
     if (!user) return undefined;
 
-    return {
-      username: user.username,
-      accessLevel: user.access_level,
-    };
+    return user;
   }
 
   /**

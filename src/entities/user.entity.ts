@@ -14,6 +14,9 @@ export class UserEntity {
   @Column({ nullable: false })
   password: string;
 
+  /**
+   * lower = better (more permisions)
+  */
   @Column({ nullable: false })
   access_level: number;
 }
