@@ -49,7 +49,7 @@ describe('User Service', () => {
   });
 
   it("should't find user", async () => {
-    expect(await service.findOne('noone')).toBe(false);
+    expect(await service.findOne('noone')).toBe(undefined);
   });
 
   it("shouldn't find user", async () => {

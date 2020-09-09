@@ -65,14 +65,10 @@ export class UsersService {
   /**
    * Find specific user by username
    * @param username string
-   * @return <false | UserEntity>
+   * @return <undefined | UserEntity>
    */
-  async findOne(username: string): Promise<boolean | UserEntity> {
-    const user = await this.userRepository.findOne({ username: username });
-
-    if (!user) return false;
-
-    return user;
+  async findOne(username: string): Promise<undefined | UserEntity> {
+    return await this.userRepository.findOne({ username: username });
   }
 
   /**
